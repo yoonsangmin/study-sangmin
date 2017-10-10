@@ -39,6 +39,12 @@ void insert_at_front(Node **head, Node *pn){
 
 }
 
+void insert_after_node_p(Node **head, Node *p, Node *pn)
+//pn 포인터가 가리키는 노드를 p 포인터가 가리키는 노드 다음에 추가
+{
+
+}
+
 unsigned int is_list_empty(Node **head){
 	if (head==NULL)
 		return 1;
@@ -55,6 +61,8 @@ unsigned int count_list(Node **head){
 		count++;
 		temp = temp ->link;
 	}
+	
+	return count;
 }
 
 void print_list(Node **head){
