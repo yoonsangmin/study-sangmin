@@ -35,6 +35,11 @@ unsigned int count_list(Node *head);
 void print_list(Node *head);
 // 리스트의 노드 값들을 화면에 출력
 
+int search_and_remove(Node **phead,element key);
+
+void insert_after_node_p(Node *p, Node *pn);
+
+void reverse(Node **phead);
 
 #endif
 

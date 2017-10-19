@@ -9,7 +9,7 @@ int main(void)
 	int i, key;
 	Node *head1 = NULL;
 	Node *head2 = NULL;
-
+	
 	for (i = 0; i < 10; i++)
 		//head1 = insert_at_front2(head1, create_node(i*2));
 		insert_at_front(&head1,create_node(i*3));
@@ -19,6 +19,10 @@ int main(void)
 	
 	for (i = 0; i < 10; i++)
 		insert_at_rear(&head2,create_node(i * 5));
+
+	search_and_remove(&head2,5);
+
+	insert_after_node_p(search(head2, 10), create_node(20));
 
 	printf("The number of nodes in the list : %d\n", count_list(head2));
 	print_list(head2);
@@ -104,12 +108,13 @@ void insert_at_rear(Node **phead, Node *pn)
 }
 
 
-void insert_after_node_p(Node **head, Node *p, Node *pn)
+void insert_after_node_p(Node *p, Node *pn)
 // pn 포인터가 가리키는 노드를 p 포인터가 가리키는 노드 다음에 추가
 {
-	
-
-
+	Node *temp = NULL;
+	temp=p->link;
+	p->link=pn;
+	pn->link=temp;
 }
 
 Node *search(Node *head, element key)
@@ -128,23 +133,36 @@ Node *search(Node *head, element key)
 	return NULL;
 }
 
-element search_and_remove(Node **phead,element key)
+int search_and_remove(Node **phead,element key)
 {
 	Node *temp = NULL;
 	Node *before = NULL;
+	int flag = 0;
 	//Search the node to delete
 	temp = *phead;
-	if (temp == NULL)//즉 비어있는 리스트
+	while (temp!=NULL)
 	{
-		printf("List is empty!\n");
-		exit(1);
+		if(temp->data==key)
+		{
+			if(before==NULL)
+				*phead=temp->link;
+			else
+				before->link=temp->link;
+			flag=1;
+			free(temp);
+			break;
+		}
+		else
+		{
+			before=temp;
+			temp=temp->link;	
+		}
+		
 	}
-	while(temp->link !=NULL)
-	{
-		if(before == NULL)	//첫번째 노드인 경우
-			if(temp->data == key)
-
-	}
+	if(flag==1)
+		return 0;
+	else
+		return -1;
 }
 
 unsigned int is_list_empty(Node *head)
@@ -186,4 +204,17 @@ void print_list(Node *head)
 	}
 
 	return;
+}
+
+void reverse(Node **phead)
+{
+	Node *nhead = NULL, *temp = NULL, *before = NULL;
+	*nhead=**phead;
+	temp=*phead;
+	while(temp->link!=NULL)
+	{
+		temp=temp->link;
+	}
+	**phead=*temp;
+	
 }
