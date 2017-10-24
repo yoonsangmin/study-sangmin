@@ -10,30 +10,19 @@ int main(void)
 	Node *head1 = NULL;
 	Node *head2 = NULL;
 	
-	for (i = 0; i < 10; i++)
-		//head1 = insert_at_front2(head1, create_node(i*2));
-		insert_at_front(&head1,create_node(i*3));
+	head1 = insert_at_front(head1, 1);
+	head1 = insert_at_front(head1, 3);
+	head1 = insert_at_front(head1, 5);
+	head1 = insert_at_front(head1, 7);
 
-	printf("The number of nodes in the list : %d\n", count_list(head1));
+	printf("The number of nodes in the list1 is %d\n",count_list(head1));
 	print_list(head1);
-	
-	for (i = 0; i < 10; i++)
-		insert_at_rear(&head2,create_node(i * 5));
 
-	search_and_remove(&head2,5);
+	head2 = reverse(head1);
 
-	insert_after_node_p(search(head2, 10), create_node(20));
-
-	printf("The number of nodes in the list : %d\n", count_list(head2));
+	printf("The number of nodes in the list1 is %d\n",count_list(head2));
 	print_list(head2);
-	/*
-	printf("Enter an integer:\n");
-	scanf("%d", &key);
-	if (search(head1, key) == NULL)
-		printf("The key value %d is not found\n", key);
-	else
-		printf("The key value %d is found\n", key);
-		*/
+
 	return 0;
 }
 
@@ -50,21 +39,27 @@ Node *create_node(element d)
 	return pn;
 }
 
-void insert_at_front(Node **phead, Node *pn)
+Node *insert_at_front(Node *head, int data)
 // 첫번째 인자: head 포인터의 주소값
 // 두번째 인자: 추가할 노드의 주소값
 // 추가하는 노드는 리스트의 맨 처음에 위치함
 {
 	// head 포인터가 설정 안된 경우, (즉 *phead == NULL)
-	if (phead == NULL)
+
+	Node *pn=NULL;
+
+	pn=(Node *)malloc(sizeof(Node));
+	if(pn==NULL)
 	{
-		printf("No head pointer is assigned!!\n");
 		exit(1);
 	}
-	pn->link = *phead;
-	*phead = pn;
+	pn->data = data;
+	pn->link = NULL;
 
-	return;
+	pn->link = head;
+	head = pn;
+
+	return head;
 }
 
 Node *insert_at_front2(Node *head, Node *pn)
@@ -199,22 +194,30 @@ void print_list(Node *head)
 	temp = head;
 	while (temp != NULL)
 	{
-		printf("%d\n", temp->data);
+		printf("%d -> ", temp->data);
 		temp = temp->link;
 	}
+	printf("NULL\n");
 
 	return;
 }
 
-void reverse(Node **phead)
+Node *reverse(Node *head)
 {
-	Node *nhead = NULL, *temp = NULL, *before = NULL;
-	*nhead=**phead;
-	temp=*phead;
-	while(temp->link!=NULL)
+	Node *cur = NULL, *prev = NULL, *next = NULL;
+
+	cur=head;
+	next=head;
+
+	if(head == NULL)
+		exit(1);
+
+	while(cur !=NULL)
 	{
-		temp=temp->link;
+		next = cur->link;
+		cur->link = prev;
+		prev = cur;
+		cur = next;
 	}
-	**phead=*temp;
-	
+	return prev;
 }

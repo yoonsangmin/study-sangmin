@@ -14,7 +14,7 @@ Node *create_node(element d);
 // element type의 d 값을 data 필드로 갖는 노드를 생성
 // 생성된 노드의 주소값을 리턴
 
-void insert_at_front(Node **head, Node *p);
+Node *insert_at_front(Node *head, int data);
 // 첫번째 인자: head 포인터의 주소값
 // 두번째 인자: 추가할 노드의 주소값
 // 추가하는 노드는 리스트의 맨 처음에 위치함
@@ -39,7 +39,7 @@ int search_and_remove(Node **phead,element key);
 
 void insert_after_node_p(Node *p, Node *pn);
 
-void reverse(Node **phead);
+Node *reverse(Node *head);
 
 #endif
 
